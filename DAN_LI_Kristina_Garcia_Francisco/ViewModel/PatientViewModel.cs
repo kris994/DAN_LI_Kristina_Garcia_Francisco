@@ -184,7 +184,7 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
         private void SelectDoctorExecute()
         {
             // Checks if the user really wants to delete the song
-            var result = MessageBox.Show("Are you sure you want to choose this doctor?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show("Are you sure you want to choose this doctor?\nThis action cannot be reverted.", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {

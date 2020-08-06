@@ -14,6 +14,12 @@ namespace DAN_LI_Kristina_Garcia_Francisco.Model
     
     public partial class tblUser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblUser()
+        {
+            this.tblSickLeaves = new HashSet<tblSickLeave>();
+        }
+    
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,10 +27,10 @@ namespace DAN_LI_Kristina_Garcia_Francisco.Model
         public string HealthIsuranceNumber { get; set; }
         public string Username { get; set; }
         public string UserPassword { get; set; }
-        public int DoctorID { get; set; }
-        public int SickLeaveID { get; set; }
+        public Nullable<int> DoctorID { get; set; }
     
         public virtual tblDoctor tblDoctor { get; set; }
-        public virtual tblSickLeave tblSickLeave { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblSickLeave> tblSickLeaves { get; set; }
     }
 }

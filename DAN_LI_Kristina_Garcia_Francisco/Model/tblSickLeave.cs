@@ -14,19 +14,13 @@ namespace DAN_LI_Kristina_Garcia_Francisco.Model
     
     public partial class tblSickLeave
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblSickLeave()
-        {
-            this.tblUsers = new HashSet<tblUser>();
-        }
-    
         public int SickLeaveID { get; set; }
         public System.DateTime SickLeaveDate { get; set; }
         public string Reason { get; set; }
         public string CompanyName { get; set; }
         public bool EmergencyCase { get; set; }
+        public int UserID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblUser> tblUsers { get; set; }
+        public virtual tblUser tblUser { get; set; }
     }
 }

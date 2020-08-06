@@ -4,9 +4,104 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DAN_LI_Kristina_Garcia_Francisco.View"
+        xmlns:vm="clr-namespace:DAN_LI_Kristina_Garcia_Francisco.Model" 
         mc:Ignorable="d"
-        Title="AddPatient" Height="450" Width="800">
+        Title="AddManager" Height="300" Width="350" Background="#5BCED0">
+    <Window.Resources>
+        <vm:tblUser x:Key="data"/>
+
+        <!--The tool tip for the TextBox to display the validation error message.-->
+        <Style x:Key="textBoxInError" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" Grid.Row="29" Grid.ColumnSpan="4">*Mouse-over to see the validation error message.</TextBlock>
+        <Label Grid.Column="1" Grid.Row="1" Name="lblFirstName" Content="First Name:" Padding="0" HorizontalAlignment="Right"/>
+        <Label Grid.Column="1" Grid.Row="3" Name="lblLastName" Content="Last Name:" Padding="0" HorizontalAlignment="Right"/>
+        <Label Grid.Column="1" Grid.Row="5" Name="lblJMBG" Content="JMBG:" Padding="0" HorizontalAlignment="Right"/>
+        <Label Grid.Column="1" Grid.Row="7" Name="lblHealthIsuranceNumber" Content="Health Insurance Number:" Padding="0" HorizontalAlignment="Right"/>
+        <Label Grid.Column="1" Grid.Row="9" Name="lblUsername" Content="Username:" Padding="0" HorizontalAlignment="Right"/>
+        <Label Grid.Column="1" Grid.Row="11" Name="lblPassword" Content="Password:" Padding="0" HorizontalAlignment="Right"/>
+
+        <TextBox Grid.Column="3" Grid.Row="1" Name="txtFirstName" Height="20" Width="150" Style="{StaticResource textBoxInError}"
+                 Text="{Binding Patient.FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <TextBox Grid.Column="3" Grid.Row="3" Name="txtLastName" Height="20" Width="150" Style="{StaticResource textBoxInError}"
+                 Text="{Binding Patient.LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <TextBox Grid.Column="3" Grid.Row="5" Name="txtJMBG" Height="20" Width="150" 
+                 Text="{Binding Patient.JMBG, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                 Style="{StaticResource textBoxInError}" PreviewTextInput="NumberValidationTextBox"/>
+        <TextBox Grid.Column="3" Grid.Row="7" Name="txtHealthIsuranceNumber" Height="20" Width="150"
+                 Text="{Binding Patient.HealthIsuranceNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                 Style="{StaticResource textBoxInError}" PreviewTextInput="NumberValidationTextBox"/>
+        <TextBox Grid.Column="3" Grid.Row="9" Name="txtUsername" Height="20" Width="150"
+                 Text="{Binding Patient.Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                 Style="{StaticResource textBoxInError}"/>
+        <TextBox Grid.Column="3" Grid.Row="11" Name="txtPassword" Height="20" Width="150" FontFamily="pack://application:,,,/Resources/#password"
+                 Text="{Binding Patient.UserPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                 Style="{StaticResource textBoxInError}"/>
+
+        <Button Grid.Column="3" Grid.Row="13" IsDefault="True" Name="btnSave" Content="Save" Height="20" Width="70" HorizontalAlignment="Left"
+                Command="{Binding Save, UpdateSourceTrigger=PropertyChanged}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text.Length, ElementName=txtFirstName, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Text.Length, ElementName=txtLastName, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Text.Length, ElementName=txtJMBG, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Text.Length, ElementName=txtBankAccount, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Text.Length, ElementName=txtUsername, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Text.Length, ElementName=txtPassword, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Grid.Column="3" Grid.Row="13" Name="btnCancel" Content="Cancel" Height="20" Width="70" HorizontalAlignment="Right"
+                Command="{Binding Cancel, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>
+

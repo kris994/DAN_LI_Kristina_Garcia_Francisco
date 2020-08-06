@@ -136,12 +136,13 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
         {
             try
             {
-                AddPatient addPatient = new AddPatient();
+                AddPatient addPatient = new AddPatient();               
                 addPatient.ShowDialog();
-                //if ((addPatient.DataContext as AddPatientViewModel).IsUpdatePatient == true)
-                //{
-                //    UserList = service.GetAllUsers().ToList();
-                //}
+                view.Close();
+                if ((addPatient.DataContext as AddPatientViewModel).IsUpdatePatient == true)
+                {
+                    UserList = service.GetAllUsers().ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -183,10 +184,11 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
             {
                 AddDoctor addDoctor = new AddDoctor();
                 addDoctor.ShowDialog();
-                //if ((addDoctor.DataContext as AddDoctorViewModel).IsUpdateDoctor == true)
-                //{
-                //    DoctorList = service.GetAllDoctors().ToList();
-                //}
+                view.Close();
+                if ((addDoctor.DataContext as AddDoctorViewModel).IsUpdateDoctor == true)
+                {
+                    DoctorList = service.GetAllDoctors().ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -241,8 +243,7 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
                         HealthIsuranceNumber = UserList[i].HealthIsuranceNumber,
                         Username = UserList[i].Username,
                         UserPassword = UserList[i].UserPassword,
-                        DoctorID = UserList[i].DoctorID,
-                        SickLeaveID = UserList[i].SickLeaveID
+                        DoctorID = UserList[i].DoctorID
                     };
                     InfoLabel = "Logged in";
                     found = true;
@@ -256,7 +257,7 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
 
             for (int i = 0; i < DoctorList.Count; i++)
             {
-                if (Doctor.Username == DoctorList[i].Username && password == DoctorList[i].UserPassword)
+                if (User.Username == DoctorList[i].Username && password == DoctorList[i].UserPassword)
                 {
                     LoggedDoctor.CurrentDoctor = new tblDoctor
                     {

@@ -1,7 +1,7 @@
 -- Dropping the tables before recreating the database in the order depending how the foreign keys are placed.
+IF OBJECT_ID('tblSickLeave', 'U') IS NOT NULL DROP TABLE tblSickLeave;
 IF OBJECT_ID('tblUser', 'U') IS NOT NULL DROP TABLE tblUser;
 IF OBJECT_ID('tblDoctor', 'U') IS NOT NULL DROP TABLE tblDoctor;
-IF OBJECT_ID('tblSickLeave', 'U') IS NOT NULL DROP TABLE tblSickLeave;
 
 -- Checks if the database already exists.
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'HospitalDB')
@@ -20,15 +20,6 @@ CREATE TABLE tblDoctor (
 );
 
 USE HospitalDB
-CREATE TABLE tblSickLeave (
-	SickLeaveID INT IDENTITY(1,1) PRIMARY KEY	NOT NULL,
-	SickLeaveDate DATE 							NOT NULL,
-	Reason VARCHAR (200)						NOT NULL,
-	CompanyName VARCHAR (40)					NOT NULL,
-	EmergencyCase BIT							NOT NULL,
-);
-
-USE HospitalDB
 CREATE TABLE tblUser(
 	UserID INT IDENTITY(1,1) PRIMARY KEY 	NOT NULL,
 	FirstName VARCHAR (40)					NOT NULL,
@@ -37,6 +28,15 @@ CREATE TABLE tblUser(
 	HealthIsuranceNumber VARCHAR (40)		NOT NULL,
 	Username VARCHAR (40) UNIQUE			NOT NULL,
 	UserPassword VARCHAR (40)				NOT NULL,
-	DoctorID INT FOREIGN KEY REFERENCES tblDoctor(DoctorID) NOT NULL,
-	SickLeaveID INT FOREIGN KEY REFERENCES tblSickLeave(SickLeaveID) NOT NULL,
+	DoctorID INT FOREIGN KEY REFERENCES tblDoctor(DoctorID),	
+);
+
+USE HospitalDB
+CREATE TABLE tblSickLeave (
+	SickLeaveID INT IDENTITY(1,1) PRIMARY KEY	NOT NULL,
+	SickLeaveDate DATE 							NOT NULL,
+	Reason VARCHAR (200)						NOT NULL,
+	CompanyName VARCHAR (40)					NOT NULL,
+	EmergencyCase BIT							NOT NULL,
+	UserID INT FOREIGN KEY REFERENCES tblUser(UserID) NOT NULL,
 );

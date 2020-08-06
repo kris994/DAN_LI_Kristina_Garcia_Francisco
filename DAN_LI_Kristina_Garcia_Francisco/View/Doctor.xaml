@@ -3,10 +3,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DAN_LI_Kristina_Garcia_Francisco.View"
+        xmlns:local="clr-namespace:DAN_LI_Kristina_Garcia_Francisco"
+        xmlns:c="clr-namespace:DAN_LI_Kristina_Garcia_Francisco.Helper"
         mc:Ignorable="d"
-        Title="Doctor" Height="450" Width="800">
-    <Grid>
-        
+        Title="Users" Height="auto" MaxHeight="450" Width="auto" MaxWidth="800">
+    <Window.Resources>
+        <c:PatientNameConverter x:Key="PatientNameConverter" />
+    </Window.Resources>
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+            <Button Width="80" Height="20" Name="btnLogoff" Content="Log Off"
+                    Command="{Binding Logoff, UpdateSourceTrigger=PropertyChanged}" Margin="20,4,4,4" FontWeight="Bold"/>
+        </StackPanel>
+        <Grid Grid.Column="1" Grid.Row="2" Height="auto" Width="auto">
+            <DataGrid Name="DataGridDoctors" ItemsSource="{Binding AllCurrentSickLeaves, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SickLeave, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HeadersVisibility="Column"
+                      AutoGenerateColumns="False"
+                      HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black"
+                      FontWeight="Bold" Margin="20">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding UserID, Converter={StaticResource ResourceKey=PatientNameConverter}}" Width="0.1*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding SickLeaveDate, StringFormat='dd.MM.yyyy'}" Width="0.1*"/>
+                    <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" Width="0.1*"/>
+                    <DataGridTextColumn Header="CompanyName" Binding="{Binding CompanyName}" Width="0.1*"/>
+                    <DataGridTextColumn Header="EmergencyCase" Binding="{Binding EmergencyCase}" Width="0.1*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Window>

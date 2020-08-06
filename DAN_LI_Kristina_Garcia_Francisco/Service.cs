@@ -11,6 +11,8 @@ namespace DAN_LI_Kristina_Garcia_Francisco
     /// </summary>
     class Service
     {
+        public object GetAllSickLeavesFromCurrentPatientLoggedIn { get; internal set; }
+
         /// <summary>
         /// Gets all information about users
         /// </summary>
@@ -243,6 +245,86 @@ namespace DAN_LI_Kristina_Garcia_Francisco
                         context.SaveChanges();
 
                         return doctor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Patient chooses a doctor
+        /// </summary>
+        /// /// <param name="user">current user</param>
+        /// <param name="doctorID">the selected doctor id</param>
+        /// <returns>the patient with the selected doctor</returns>
+        public tblUser ChooseDoctor(tblUser user, int doctorID)
+        {
+            using (HospitalDBEntities context = new HospitalDBEntities())
+            {
+                tblUser userToEdit = (from ss in context.tblUsers where ss.UserID == user.UserID select ss).First();
+
+                userToEdit.FirstName = user.FirstName;
+                userToEdit.LastName = user.LastName;
+                userToEdit.JMBG = user.JMBG;
+                userToEdit.HealthIsuranceNumber = user.HealthIsuranceNumber;
+                userToEdit.Username = user.Username;
+                userToEdit.UserPassword = user.UserPassword;
+                userToEdit.DoctorID = doctorID;
+
+                userToEdit.UserID = user.UserID;
+                context.SaveChanges();
+
+                LoggedUser.CurrentUser.DoctorID = doctorID;
+                return user;
+            }
+        }
+
+        /// <summary>
+        /// Adds the sick leave
+        /// </summary>
+        /// <param name="sickLeave">the sickLeave that is being added</param> 
+        /// <returns>a new sickLeave</returns>
+        public tblSickLeave AddSickLeave(tblSickLeave sickLeave)
+        {
+            try
+            {
+                using (HospitalDBEntities context = new HospitalDBEntities())
+                {
+                    if (sickLeave.SickLeaveID == 0)
+                    {
+                        tblSickLeave newSickLeave = new tblSickLeave
+                        {
+                            SickLeaveDate = sickLeave.SickLeaveDate,
+                            Reason = sickLeave.Reason,
+                            CompanyName = sickLeave.CompanyName,
+                            EmergencyCase = sickLeave.EmergencyCase,
+                            UserID = LoggedUser.CurrentUser.UserID
+                        };
+
+                        context.tblSickLeaves.Add(newSickLeave);
+                        context.SaveChanges();
+                        sickLeave.SickLeaveID = newSickLeave.SickLeaveID;
+
+                        return newSickLeave;
+                    }
+                    else
+                    {
+                        tblSickLeave sickLeaveEdit = (from ss in context.tblSickLeaves where ss.SickLeaveID == sickLeave.SickLeaveID select ss).First();
+
+                        sickLeaveEdit.SickLeaveDate = sickLeave.SickLeaveDate;
+                        sickLeaveEdit.Reason = sickLeave.Reason;
+                        sickLeaveEdit.CompanyName = sickLeave.CompanyName;
+                        sickLeaveEdit.EmergencyCase = sickLeave.EmergencyCase;
+                        sickLeaveEdit.UserID = sickLeave.UserID;
+
+                        sickLeaveEdit.SickLeaveID = sickLeave.SickLeaveID;
+                        context.SaveChanges();
+
+                        return sickLeave;
                     }
                 }
             }

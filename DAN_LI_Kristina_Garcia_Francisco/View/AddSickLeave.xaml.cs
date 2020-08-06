@@ -4,14 +4,14 @@ using System.Windows;
 namespace DAN_LI_Kristina_Garcia_Francisco.View
 {
     /// <summary>
-    /// Interaction logic for Doctor.xaml
+    /// Interaction logic for AddSickLeave.xaml
     /// </summary>
-    public partial class Doctor : Window
+    public partial class AddSickLeave : Window
     {
-        public Doctor()
+        public AddSickLeave()
         {
             InitializeComponent();
-            this.DataContext = new DoctorViewModel(this);
+            this.DataContext = new AddSickLeaveViewModel(this);
         }
     }
 }

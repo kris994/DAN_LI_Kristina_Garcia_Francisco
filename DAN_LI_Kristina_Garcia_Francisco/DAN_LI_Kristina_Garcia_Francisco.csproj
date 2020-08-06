@@ -69,6 +69,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Helper\DateConverter.cs" />
+    <Compile Include="Helper\PatientNameConverter.cs" />
     <Compile Include="Helper\Validations.cs" />
     <Compile Include="Model\Doctor.cs" />
     <Compile Include="Model\HospitalDB.Context.cs">
@@ -101,13 +103,19 @@
     <Compile Include="Service.cs" />
     <Compile Include="ViewModel\AddDoctorViewModel.cs" />
     <Compile Include="ViewModel\AddPatientViewModel.cs" />
+    <Compile Include="ViewModel\AddSickLeaveViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\DoctorViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\PatientViewModel.cs" />
     <Compile Include="View\AddDoctor.xaml.cs">
       <DependentUpon>AddDoctor.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AddPatient.xaml.cs">
       <DependentUpon>AddPatient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddSickLeave.xaml.cs">
+      <DependentUpon>AddSickLeave.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Doctor.xaml.cs">
       <DependentUpon>Doctor.xaml</DependentUpon>
@@ -166,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AddPatient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddSickLeave.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

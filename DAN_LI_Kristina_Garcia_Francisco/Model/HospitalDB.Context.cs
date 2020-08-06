@@ -13,10 +13,10 @@ namespace DAN_LI_Kristina_Garcia_Francisco.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HotelDBEntities : DbContext
+    public partial class HospitalDBEntities : DbContext
     {
-        public HotelDBEntities()
-            : base("name=HotelDBEntities")
+        public HospitalDBEntities()
+            : base("name=HospitalDBEntities")
         {
         }
     
@@ -25,8 +25,8 @@ namespace DAN_LI_Kristina_Garcia_Francisco.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblEmployee> tblEmployees { get; set; }
-        public virtual DbSet<tblManager> tblManagers { get; set; }
+        public virtual DbSet<tblDoctor> tblDoctors { get; set; }
+        public virtual DbSet<tblSickLeave> tblSickLeaves { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
     }
 }

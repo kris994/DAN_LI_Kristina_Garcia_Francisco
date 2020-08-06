@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DAN_LI_Kristina_Garcia_Francisco.View"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Login" Height="390" Width="300" FontSize="14" Background="#5BCED0">
+    <Border Background="#2e3137" CornerRadius="20" Margin="20">
+        <StackPanel Margin="20">
+            <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
+            <Separator></Separator>
+            <Label Content="Username" Foreground="White"/>
+            <TextBox Name="txtUsername" Background="#545d6a" Foreground="White" FontSize="18" 
+                     Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtChanged"/>
+            <Label Content="Password" Foreground="White"/>
+            <PasswordBox Name="passwordBox" Background="#545d6a" Foreground="White" FontSize="18" PasswordBox.PasswordChanged="txtChanged"/>
+            <Button Command="{Binding Login, UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=passwordBox}" 
+                    Name="btnLogin" Content="Login" Margin="60 10" Background="#545d6a" Foreground="White" FontSize="18" IsDefault="True">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=txtUsername, Path=Text}" Value="">
+                                <Setter Property="Button.IsEnabled" Value="false" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding ElementName=txtPassword, Path=Password}" Value="">
+                                <Setter Property="Button.IsEnabled" Value="false" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <TextBlock>                                
+                <Hyperlink Command="{Binding AddNewDoctor, UpdateSourceTrigger=PropertyChanged}" Foreground="White">Register as a Doctor</Hyperlink>
+            </TextBlock>
+            <TextBlock>                                
+                <Hyperlink Command="{Binding AddNewPatient, UpdateSourceTrigger=PropertyChanged}" Foreground="White">Register as a Patient</Hyperlink>
+            </TextBlock>
+            <Label  HorizontalAlignment="Center" Content="{Binding InfoLabel, Mode=OneWay}" Foreground="Red"/>
+        </StackPanel>
+    </Border>
 </Window>
+

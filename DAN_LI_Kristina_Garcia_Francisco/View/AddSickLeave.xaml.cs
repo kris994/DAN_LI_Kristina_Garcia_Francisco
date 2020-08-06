@@ -8,6 +8,9 @@ namespace DAN_LI_Kristina_Garcia_Francisco.View
     /// </summary>
     public partial class AddSickLeave : Window
     {
+        /// <summary>
+        /// Adds a sick leave window
+        /// </summary>
         public AddSickLeave()
         {
             InitializeComponent();

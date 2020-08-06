@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
 {
+    /// <summary>
+    /// Patient window
+    /// </summary>
     class AddPatientViewModel : BaseViewModel
     {
         AddPatient addPatient;

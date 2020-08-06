@@ -15,6 +15,9 @@ namespace DAN_LI_Kristina_Garcia_Francisco.View
     /// </summary>
     public partial class AddDoctor : Window
     {
+        /// <summary>
+        /// Adds the doctor window
+        /// </summary>
         public AddDoctor()
         {
             InitializeComponent();

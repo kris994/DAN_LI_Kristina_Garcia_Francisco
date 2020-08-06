@@ -22,13 +22,14 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
         /// <summary>
         /// Constructor with PatientViewModel param
         /// </summary>
-        /// <param name="User">opens the all User window</param>
+        /// <param name="patientOpen">opens the all User window</param>
         public PatientViewModel(User patientOpen)
         {
             patientWindow = patientOpen;
             DoctorList = service.GetAllDoctors().ToList();
             AllCurrentSickLeaves = service.GetAllSickLeavesFromCurrentPatient(LoggedUser.CurrentUser.UserID).ToList();
             ShowAllDoctors();
+            InfoText();
         }
         #endregion
 
@@ -117,6 +118,23 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
                 OnPropertyChanged("ShowDoctors");
             }
         }
+
+        /// <summary>
+        /// Login info label
+        /// </summary>
+        private string infoLabel;
+        public string InfoLabel
+        {
+            get
+            {
+                return infoLabel;
+            }
+            set
+            {
+                infoLabel = value;
+                OnPropertyChanged("InfoLabel");
+            }
+        }
         #endregion
 
         public void ShowAllDoctors()
@@ -128,6 +146,18 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
             else
             {
                 ShowDoctors = Visibility.Collapsed;
+            }
+        }
+
+        public void InfoText()
+        {
+            if (!DoctorList.Any())
+            {
+                InfoLabel = "No available doctors right now";
+            }
+            else
+            {
+                InfoLabel = "";
             }
         }
 
@@ -235,6 +265,68 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
             {
                 return true;
             }          
+        }
+
+        /// <summary>
+        /// Command that tries to delete the sick leave
+        /// </summary>
+        private ICommand deleteSickLeave;
+        public ICommand DeleteSickLeave
+        {
+            get
+            {
+                if (deleteSickLeave == null)
+                {
+                    deleteSickLeave = new RelayCommand(param => DeleteSickLeaveExecute(), param => CanDeleteSickLeaveExecute());
+                }
+                return deleteSickLeave;
+            }
+        }
+
+        /// <summary>
+        /// Executes the delete command
+        /// </summary>
+        public void DeleteSickLeaveExecute()
+        {
+            // Checks if the user really wants to delete the song
+            var result = MessageBox.Show("Are you sure you want to delete the sick leave?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    if (SickLeave != null)
+                    {
+                        int sickLeaveID = SickLeave.SickLeaveID;
+                        service.DeleteSickLeave(sickLeaveID);
+                        AllCurrentSickLeaves = service.GetAllSickLeavesFromCurrentPatient(LoggedUser.CurrentUser.UserID).ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the sick leave can be deleted
+        /// </summary>
+        /// <returns>true if possible</returns>
+        public bool CanDeleteSickLeaveExecute()
+        {
+            if (SickLeave == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>

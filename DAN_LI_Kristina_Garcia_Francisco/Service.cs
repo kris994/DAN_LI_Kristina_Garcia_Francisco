@@ -3,6 +3,7 @@ using DAN_LI_Kristina_Garcia_Francisco.Model;
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
+using System.Windows;
 
 namespace DAN_LI_Kristina_Garcia_Francisco
 {
@@ -332,6 +333,67 @@ namespace DAN_LI_Kristina_Garcia_Francisco
             {
                 Debug.WriteLine("Exception" + ex.Message.ToString());
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Search if sick leave with that ID exists in the sick leave table
+        /// </summary>
+        /// <param name="sickLeaveID">Takes the sickLeaveID that we want to search for</param>
+        /// <returns>True if the sick leave exists</returns>
+        public bool IsSickLeave(int sickLeaveID)
+        {
+            try
+            {
+                using (HospitalDBEntities context = new HospitalDBEntities())
+                {
+                    int result = (from x in context.tblSickLeaves where x.SickLeaveID == sickLeaveID select x.SickLeaveID).FirstOrDefault();
+
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception " + ex.Message.ToString());
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the sick leave depending if the sickLeaveID already exists
+        /// </summary>
+        /// <param name="sickLeaveID">the sick leave that is being deleted</param>
+        /// <returns>list of sick leaves</returns>
+        public void DeleteSickLeave(int sickLeaveID)
+        {
+            try
+            {
+                using (HospitalDBEntities context = new HospitalDBEntities())
+                {
+                    bool isSickLeave = IsSickLeave(sickLeaveID);
+                    if (isSickLeave == true)
+                    {
+                        tblSickLeave sickLeaveToDelete = (from r in context.tblSickLeaves where r.SickLeaveID == sickLeaveID select r).First();
+
+                        context.tblSickLeaves.Remove(sickLeaveToDelete);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot delete the song");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
             }
         }
     }

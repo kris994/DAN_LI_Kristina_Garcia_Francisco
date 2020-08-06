@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
 {
+    /// <summary>
+    /// Doctor window
+    /// </summary>
     class DoctorViewModel : BaseViewModel
     {
         Doctor doctorWindow;
@@ -18,11 +21,12 @@ namespace DAN_LI_Kristina_Garcia_Francisco.ViewModel
         /// <summary>
         /// Constructor with DoctorViewModel param
         /// </summary>
-        /// <param name="Doctor">opens the Doctor window</param>
+        /// <param name="doctorOpen">opens the Doctor window</param>
         public DoctorViewModel(Doctor doctorOpen)
         {
             doctorWindow = doctorOpen;
-            AllCurrentSickLeaves = service.GetAllSickLeavesFromCurrentDoctor(LoggedDoctor.CurrentDoctor.DoctorID).ToList();
+            AllCurrentSickLeaves = service.GetAllSickLeavesFromCurrentDoctor(LoggedDoctor.CurrentDoctor.DoctorID)
+                .OrderByDescending(e => e.EmergencyCase).ThenBy(d => d.SickLeaveDate).ToList();
         }
         #endregion
 

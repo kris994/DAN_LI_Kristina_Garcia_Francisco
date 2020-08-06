@@ -4,28 +4,28 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HotelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tblEmployee">
+      <Schema Namespace="HospitalDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblDoctor">
           <Key>
-            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="DoctorID" />
           </Key>
-          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FloorNumber" Type="int" />
-          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="Citizenship" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="Responsibility" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="Salary" Type="varchar" MaxLength="40" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="DoctorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="JMBG" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="BankAccount" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="40" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblManager">
+        <EntityType Name="tblSickLeave">
           <Key>
-            <PropertyRef Name="ManagerID" />
+            <PropertyRef Name="SickLeaveID" />
           </Key>
-          <Property Name="ManagerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FloorNumber" Type="int" Nullable="false" />
-          <Property Name="YearsOfExperience" Type="int" Nullable="false" />
-          <Property Name="EducationDegree" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="SickLeaveID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SickLeaveDate" Type="date" Nullable="false" />
+          <Property Name="Reason" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="EmergencyCase" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -34,76 +34,78 @@
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="DateOfBirth" Type="date" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="JMBG" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="HealthIsuranceNumber" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="UserPassword" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="DoctorID" Type="int" Nullable="false" />
+          <Property Name="SickLeaveID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__tblEmploy__UserI__47DBAE45">
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
-          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+        <Association Name="FK__tblUser__DoctorI__72910220">
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblUser">
-              <PropertyRef Name="UserID" />
+            <Principal Role="tblDoctor">
+              <PropertyRef Name="DoctorID" />
             </Principal>
-            <Dependent Role="tblEmployee">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="tblUser">
+              <PropertyRef Name="DoctorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblManage__UserI__4AB81AF0">
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
-          <End Role="tblManager" Type="Self.tblManager" Multiplicity="*" />
+        <Association Name="FK__tblUser__SickLea__73852659">
+          <End Role="tblSickLeave" Type="Self.tblSickLeave" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblUser">
-              <PropertyRef Name="UserID" />
+            <Principal Role="tblSickLeave">
+              <PropertyRef Name="SickLeaveID" />
             </Principal>
-            <Dependent Role="tblManager">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="tblUser">
+              <PropertyRef Name="SickLeaveID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HotelDBModelStoreContainer">
-          <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblManager" EntityType="Self.tblManager" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="HospitalDBModelStoreContainer">
+          <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSickLeave" EntityType="Self.tblSickLeave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__tblEmploy__UserI__47DBAE45" Association="Self.FK__tblEmploy__UserI__47DBAE45">
+          <AssociationSet Name="FK__tblUser__DoctorI__72910220" Association="Self.FK__tblUser__DoctorI__72910220">
+            <End Role="tblDoctor" EntitySet="tblDoctor" />
             <End Role="tblUser" EntitySet="tblUser" />
-            <End Role="tblEmployee" EntitySet="tblEmployee" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblManage__UserI__4AB81AF0" Association="Self.FK__tblManage__UserI__4AB81AF0">
+          <AssociationSet Name="FK__tblUser__SickLea__73852659" Association="Self.FK__tblUser__SickLea__73852659">
+            <End Role="tblSickLeave" EntitySet="tblSickLeave" />
             <End Role="tblUser" EntitySet="tblUser" />
-            <End Role="tblManager" EntitySet="tblManager" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HotelDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tblEmployee">
+      <Schema Namespace="HospitalDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblDoctor">
           <Key>
-            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="DoctorID" />
           </Key>
-          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FloorNumber" Type="Int32" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Citizenship" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Responsibility" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Salary" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblEmploy__UserI__47DBAE45" FromRole="tblEmployee" ToRole="tblUser" />
+          <Property Name="DoctorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JMBG" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BankAccount" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblUsers" Relationship="Self.FK__tblUser__DoctorI__72910220" FromRole="tblDoctor" ToRole="tblUser" />
         </EntityType>
-        <EntityType Name="tblManager">
+        <EntityType Name="tblSickLeave">
           <Key>
-            <PropertyRef Name="ManagerID" />
+            <PropertyRef Name="SickLeaveID" />
           </Key>
-          <Property Name="ManagerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FloorNumber" Type="Int32" Nullable="false" />
-          <Property Name="YearsOfExperience" Type="Int32" Nullable="false" />
-          <Property Name="EducationDegree" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblManage__UserI__4AB81AF0" FromRole="tblManager" ToRole="tblUser" />
+          <Property Name="SickLeaveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SickLeaveDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Reason" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmergencyCase" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblUsers" Relationship="Self.FK__tblUser__SickLea__73852659" FromRole="tblSickLeave" ToRole="tblUser" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -112,48 +114,50 @@
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JMBG" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HealthIsuranceNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserPassword" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblEmployees" Relationship="Self.FK__tblEmploy__UserI__47DBAE45" FromRole="tblUser" ToRole="tblEmployee" />
-          <NavigationProperty Name="tblManagers" Relationship="Self.FK__tblManage__UserI__4AB81AF0" FromRole="tblUser" ToRole="tblManager" />
+          <Property Name="DoctorID" Type="Int32" Nullable="false" />
+          <Property Name="SickLeaveID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblDoctor" Relationship="Self.FK__tblUser__DoctorI__72910220" FromRole="tblUser" ToRole="tblDoctor" />
+          <NavigationProperty Name="tblSickLeave" Relationship="Self.FK__tblUser__SickLea__73852659" FromRole="tblUser" ToRole="tblSickLeave" />
         </EntityType>
-        <Association Name="FK__tblEmploy__UserI__47DBAE45">
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
-          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+        <Association Name="FK__tblUser__DoctorI__72910220">
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblUser">
-              <PropertyRef Name="UserID" />
+            <Principal Role="tblDoctor">
+              <PropertyRef Name="DoctorID" />
             </Principal>
-            <Dependent Role="tblEmployee">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="tblUser">
+              <PropertyRef Name="DoctorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblManage__UserI__4AB81AF0">
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
-          <End Role="tblManager" Type="Self.tblManager" Multiplicity="*" />
+        <Association Name="FK__tblUser__SickLea__73852659">
+          <End Role="tblSickLeave" Type="Self.tblSickLeave" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblUser">
-              <PropertyRef Name="UserID" />
+            <Principal Role="tblSickLeave">
+              <PropertyRef Name="SickLeaveID" />
             </Principal>
-            <Dependent Role="tblManager">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="tblUser">
+              <PropertyRef Name="SickLeaveID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HotelDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
-          <EntitySet Name="tblManagers" EntityType="Self.tblManager" />
+        <EntityContainer Name="HospitalDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblDoctors" EntityType="Self.tblDoctor" />
+          <EntitySet Name="tblSickLeaves" EntityType="Self.tblSickLeave" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
-          <AssociationSet Name="FK__tblEmploy__UserI__47DBAE45" Association="Self.FK__tblEmploy__UserI__47DBAE45">
+          <AssociationSet Name="FK__tblUser__DoctorI__72910220" Association="Self.FK__tblUser__DoctorI__72910220">
+            <End Role="tblDoctor" EntitySet="tblDoctors" />
             <End Role="tblUser" EntitySet="tblUsers" />
-            <End Role="tblEmployee" EntitySet="tblEmployees" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblManage__UserI__4AB81AF0" Association="Self.FK__tblManage__UserI__4AB81AF0">
+          <AssociationSet Name="FK__tblUser__SickLea__73852659" Association="Self.FK__tblUser__SickLea__73852659">
+            <End Role="tblSickLeave" EntitySet="tblSickLeaves" />
             <End Role="tblUser" EntitySet="tblUsers" />
-            <End Role="tblManager" EntitySet="tblManagers" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -161,41 +165,43 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HotelDBModelStoreContainer" CdmEntityContainer="HotelDBEntities">
-          <EntitySetMapping Name="tblEmployees">
-            <EntityTypeMapping TypeName="HotelDBModel.tblEmployee">
-              <MappingFragment StoreEntitySet="tblEmployee">
-                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-                <ScalarProperty Name="FloorNumber" ColumnName="FloorNumber" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
-                <ScalarProperty Name="Responsibility" ColumnName="Responsibility" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
+        <EntityContainerMapping StorageEntityContainer="HospitalDBModelStoreContainer" CdmEntityContainer="HospitalDBEntities">
+          <EntitySetMapping Name="tblDoctors">
+            <EntityTypeMapping TypeName="HospitalDBModel.tblDoctor">
+              <MappingFragment StoreEntitySet="tblDoctor">
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="JMBG" ColumnName="JMBG" />
+                <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblManagers">
-            <EntityTypeMapping TypeName="HotelDBModel.tblManager">
-              <MappingFragment StoreEntitySet="tblManager">
-                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
-                <ScalarProperty Name="FloorNumber" ColumnName="FloorNumber" />
-                <ScalarProperty Name="YearsOfExperience" ColumnName="YearsOfExperience" />
-                <ScalarProperty Name="EducationDegree" ColumnName="EducationDegree" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <EntitySetMapping Name="tblSickLeaves">
+            <EntityTypeMapping TypeName="HospitalDBModel.tblSickLeave">
+              <MappingFragment StoreEntitySet="tblSickLeave">
+                <ScalarProperty Name="SickLeaveID" ColumnName="SickLeaveID" />
+                <ScalarProperty Name="SickLeaveDate" ColumnName="SickLeaveDate" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="EmergencyCase" ColumnName="EmergencyCase" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblUsers">
-            <EntityTypeMapping TypeName="HotelDBModel.tblUser">
+            <EntityTypeMapping TypeName="HospitalDBModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JMBG" ColumnName="JMBG" />
+                <ScalarProperty Name="HealthIsuranceNumber" ColumnName="HealthIsuranceNumber" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="SickLeaveID" ColumnName="SickLeaveID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

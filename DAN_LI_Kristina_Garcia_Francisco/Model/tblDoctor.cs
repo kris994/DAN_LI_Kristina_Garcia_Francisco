@@ -12,19 +12,23 @@ namespace DAN_LI_Kristina_Garcia_Francisco.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class tblUser
+    public partial class tblDoctor
     {
-        public int UserID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblDoctor()
+        {
+            this.tblUsers = new HashSet<tblUser>();
+        }
+    
+        public int DoctorID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string JMBG { get; set; }
-        public string HealthIsuranceNumber { get; set; }
+        public string BankAccount { get; set; }
         public string Username { get; set; }
         public string UserPassword { get; set; }
-        public int DoctorID { get; set; }
-        public int SickLeaveID { get; set; }
     
-        public virtual tblDoctor tblDoctor { get; set; }
-        public virtual tblSickLeave tblSickLeave { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUser> tblUsers { get; set; }
     }
 }

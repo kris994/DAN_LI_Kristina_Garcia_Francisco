@@ -8,6 +8,9 @@ namespace DAN_LI_Kristina_Garcia_Francisco.View
     /// </summary>
     public partial class Doctor : Window
     {
+        /// <summary>
+        /// Doctor window
+        /// </summary>
         public Doctor()
         {
             InitializeComponent();

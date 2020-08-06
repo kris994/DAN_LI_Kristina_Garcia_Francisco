@@ -20,6 +20,7 @@
                     Command="{Binding Logoff, UpdateSourceTrigger=PropertyChanged}" Margin="20,4,4,4" FontWeight="Bold"/>
             <Button Width="100" Height="20" Name="btnAddSickLeave" Content="Add Sick Leave"
                     Command="{Binding AddNewSickLeave, UpdateSourceTrigger=PropertyChanged}" Margin="20,4,4,4" FontWeight="Bold"/>
+            <Label  Margin="20,4,4,4" HorizontalAlignment="Center" Content="{Binding InfoLabel, Mode=OneWay}"/>
         </StackPanel>
         <Grid Grid.Column="1" Grid.Row="2" Height="auto" Width="auto">
             <DataGrid Name="DataGridDoctors" ItemsSource="{Binding DoctorList, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ShowDoctors}"
@@ -53,6 +54,15 @@
                     <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" Width="0.1*"/>
                     <DataGridTextColumn Header="CompanyName" Binding="{Binding CompanyName}" Width="0.1*"/>
                     <DataGridTextColumn Header="EmergencyCase" Binding="{Binding EmergencyCase}" Width="0.1*"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDeleteSickLeave" Content="Delete" 
+                                Command="{Binding DataContext.DeleteSickLeave, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" 
+                                        Margin="4" FontWeight="Bold"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
